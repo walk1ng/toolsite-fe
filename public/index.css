@@ -1,0 +1,14 @@
+.active {
+  color: white;
+  background-color: dodgerblue;
+}
+
+ul{
+  list-style-type: none;
+}
+
+ul li{
+  display: inline;
+}
+
+
