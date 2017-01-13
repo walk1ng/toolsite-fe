@@ -1,5 +1,4 @@
 import React from 'react'
-import JenkinsItem from './JenkinsItem'
 import NavLink from './NavLink'
 
 export default React.createClass({
@@ -42,14 +41,13 @@ export default React.createClass({
             <label for="jksName">Name:
               <input type="text" name="jksName" id="jksName" placeholder="Jenkins Name" required/>
             </label> {' '}
-            <label for="jksUrl">Name:
+            <label for="jksUrl">URL:
               <input type="url" name="jksUrl" id="jksUrl" placeholder="Jenkins URL" required/>
             </label> {' '}
             <button type="submit">Save</button>
           </form>
         </div>
         <div>
-          <h2>list</h2>
           <ul>
           {
             this.state.allJenkins.map(function(jenkinsItem){
