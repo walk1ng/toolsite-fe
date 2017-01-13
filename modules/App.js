@@ -6,7 +6,7 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <h1>Wei's Test Utilities</h1>
+        <h1 style={{textAlign: 'center'}}>Wei's Test Utilities</h1>
         <ul role="nav">
           <li><IndexLink to="/" activeClassName="active">Home</IndexLink></li> {' '}
           <li><NavLink to="/jenkins">Jenkins</NavLink></li> {' '}
