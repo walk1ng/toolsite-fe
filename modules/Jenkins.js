@@ -27,6 +27,8 @@ export default React.createClass({
       name: jksName,
       url: jksUrl,
     }
+    // mock
+    // ajax post the new one
     allJenkins.push(newJenkins)
     this.setState({allJenkins: allJenkins})
     console.log(jksName + ' : ' + jksUrl)
