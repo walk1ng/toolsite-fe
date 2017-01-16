@@ -1,7 +1,9 @@
 import React from 'react'
 
-export default React.createClass({
+class Azure extends React.Component {
   render() {
     return <div>Azure</div>
   }
-})
+}
+
+export default Azure

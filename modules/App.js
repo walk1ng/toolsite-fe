@@ -2,11 +2,10 @@ import React from 'react'
 import NavLink from './NavLink'
 import { IndexLink } from 'react-router'
 
-export default React.createClass({
+class App extends React.Component {
   render() {
     return (
       <div>
-        <h1 style={{textAlign: 'center'}}>Wei's Test Utilities</h1>
         <ul role="nav">
           <li><IndexLink to="/" activeClassName="active">Home</IndexLink></li> {' '}
           <li><NavLink to="/jenkins">Jenkins</NavLink></li> {' '}
@@ -18,4 +17,6 @@ export default React.createClass({
       </div>
     )
   }
-})
+}
+
+export default App

@@ -1,12 +1,13 @@
 import React from 'react'
 
-export default React.createClass({
+class CIJob extends React.Component {
+  render(){
+    return (
+        <div>
+        {this.props.jobName}
+        </div>
+    )
+  }
+}
 
-    render(){
-        return (
-            <div>
-                {this.props.jobName}
-            </div>
-        )
-    }
-})
+export default CIJob

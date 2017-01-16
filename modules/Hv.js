@@ -1,7 +1,9 @@
 import React from 'react'
 
-export default React.createClass({
+class Hv extends React.Component {
   render() {
     return <div>Hyper-V</div>
   }
-})
+}
+
+export default Hv

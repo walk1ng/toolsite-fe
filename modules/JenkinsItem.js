@@ -1,49 +1,47 @@
 import React from 'react'
 import CIJob from './CIJob'
 import CINode from './CINode'
- 
-export default React.createClass({
-    getInitialState() {
-        return {
-            data: {
-                name: this.props.params.jksName,
-                jobs: [],
-                nodes: [],
-            },
+
+class JenkinsItem extends React.Component {
+    constructor() {
+        super()
+        this.state = {
+            name: '',
+            online: false,
+            loginChkPass: false,
+            jobs: [],
+            nodes:[],
         }
-    },
+    }
+
+    loadDataFromServer(n) {
+        var jksName = n
+        console.log(n)
+        $.ajax({
+          url: "http://localhost:8000/jenkins/view/" + jksName,
+          dataType: "json",
+          success: d => {
+            this.setState({
+                name: d.data.name,
+                jobs: d.data.jobs,
+                nodes: d.data.nodes,
+                online: d.data.online,
+                loginChkPass: d.data.login_chkpass,
+            })
+          },
+          error: (xhr, status, err)  => {
+            console.log('msg:' + err.toString());
+          }
+        })
+    }
 
     componentDidMount() {
-        // mock here 
-        // ajax to fetch initial data here
-        console.log('call componentDidMount()')
-        var mock_data = this.state.data
-        mock_data.jobs = [this.props.params.jksName+'job1',this.props.params.jksName+'job2']
-        mock_data.nodes = [this.props.params.jksName+'node1',this.props.params.jksName+'node2']
-        this.setState({
-            data: mock_data,
-        })
-    },
+        this.loadDataFromServer(this.props.params.jksName)
+    }
 
     componentWillReceiveProps(newProps) {
-        // mock here
-        // ajax to fetch data here
-        // handle switch of jenkins view
-
-        console.log('call componentWillReceiveProps()')
-        var mock_data = this.state.data
-        var selectedJksName = newProps.params.jksName
-        console.log(selectedJksName)
-        mock_data.name = selectedJksName
-        console.log(mock_data.name)
-        mock_data.jobs = [selectedJksName+'job1',selectedJksName+'job2']
-        console.log(mock_data.jobs)
-        mock_data.nodes = [selectedJksName+'node1',selectedJksName+'node2']    
-        console.log(mock_data.nodes)
-        this.setState({
-            data: mock_data,
-        })
-    },
+        this.loadDataFromServer(newProps.params.jksName)
+    }
 
     render() {
         return (
@@ -51,18 +49,20 @@ export default React.createClass({
                 {this.props.params.jksName}
                 <br/>
                 {
-                    this.state.data.jobs.map(function(job){
+                    this.state.jobs.map(function(job){
                         return <CIJob jobName={job} />
                     })
                 }
                 <br/>
                 {
-                    this.state.data.nodes.map(function(node){
+                    this.state.nodes.map(function(node){
                         return <CINode nodeName={node} />
                     })
                 }
             </div>
         )
     }
-})
+    
+}
 
+export default JenkinsItem

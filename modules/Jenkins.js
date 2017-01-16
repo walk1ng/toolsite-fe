@@ -1,51 +1,126 @@
 import React from 'react'
 import NavLink from './NavLink'
 
-export default React.createClass({
-  getInitialState() {
-    return {
-      // mock
-      allJenkins: [
-        {
-          name: 'j1',
-          url: 'http://testurl1',
-        },
-        {
-          name: 'j2',
-          url: 'http://testurl2',
-        }
-      ],
+class Jenkins extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      allJenkins: [],
     }
-  },
+  }
+
+  loadDataFromServer() {
+    $.ajax({
+      url: "http://localhost:8000/jenkins",
+      dataType: "json",
+      success: d => {
+				this.setState({
+					allJenkins: d.data
+				})
+			},
+			error: (xhr, status, err)  => {
+				console.log('msg:' + err.toString());
+			}
+    })
+  }
+
+  componentDidMount() {
+    this.loadDataFromServer()
+  }
 
   handleSubmit(event) {
     event.preventDefault()
-    const jksName = event.target.elements[0].value
-    const jksUrl = event.target.elements[1].value
-    var allJenkins = this.state.allJenkins
-    var newJenkins = {
-      name: jksName,
-      url: jksUrl,
+  
+    const name = this.refs.name.value
+    const url = this.refs.url.value
+    const user = this.refs.user.value
+    const passwd = this.refs.passwd.value
+    const mastervmname = this.refs.mastervmname.value
+    const mastervmuser = this.refs.mastervmuser.value
+    const mastervmpasswd = this.refs.mastervmpasswd.value
+    const hvhost = this.refs.hvhost.value
+    const description = this.refs.description.value
+
+    var all = this.state.allJenkins
+    const newJenkins = {
+      name: name,
+      url: url,
+      user: user,
+      passwd: passwd,
+      mastervmname: mastervmname,
+      mastervmuser: mastervmuser,
+      mastervmpasswd: mastervmpasswd,
+      hvhost: hvhost,
+      description: description,
     }
-    // mock
-    // ajax post the new one
-    allJenkins.push(newJenkins)
-    this.setState({allJenkins: allJenkins})
-    console.log(jksName + ' : ' + jksUrl)
-  },
+
+    $.ajax({
+      url: "http://localhost:8000/jenkins/add",
+      dataType: 'json',
+      type: 'POST',
+      data: newJenkins,
+      success: jenkins => {
+        all.push(newJenkins)
+        this.setState({allJenkins: all})
+      },
+      error: (xhr, status, err) => {
+        console.log(err.toString());
+        this.setState({allJenkins: all});
+      }
+    })
+  }
 
   render() {
     return (
       <div>
         <h3>Jenkins</h3>
         <div>
-          <form onSubmit={this.handleSubmit}>
-            <label for="jksName">Name:
-              <input type="text" name="jksName" id="jksName" placeholder="Jenkins Name" required/>
+          <form onSubmit={e => this.handleSubmit(e)}>
+            <label for="name">Jenkins Name:
+              <input type="text" name="name" id="name" ref="name" placeholder="Jenkins Name" required/>
             </label> {' '}
-            <label for="jksUrl">URL:
-              <input type="url" name="jksUrl" id="jksUrl" placeholder="Jenkins URL" required/>
+            <br/>
+
+            <label for="url">Jenkins URL:
+              <input type="url" name="url" id="url" ref="url" placeholder="Jenkins URL" required/>
             </label> {' '}
+            <br/>
+
+            <label for="user">Login User:
+              <input type="text" name="user" id="user" ref="user" placeholder="User for login jenkins site" required/>
+            </label> {' '}
+            <br/>
+
+            <label for="passwd">Login Password:
+              <input type="Password" name="passwd" id="passwd" ref="passwd" placeholder="Password for login jenkins site" required/>
+            </label> {' '}
+            <br/>
+
+            <label for="mastervmname">Master VM Name:
+              <input type="text" name="mastervmname" id="mastervmname" ref="mastervmname" placeholder="VM name for master" required/>
+            </label> {' '}
+            <br/>
+
+            <label for="mastervmuser">VM User:
+              <input type="text" name="mastervmuser" id="mastervmuser" ref="mastervmuser" placeholder="User for login master vm" required/>
+            </label> {' '}
+            <br/>
+
+            <label for="mastervmpasswd">VM Password:
+              <input type="password" name="mastervmpasswd" id="mastervmpasswd" ref="mastervmpasswd" placeholder="Password for login master vm" required/>
+            </label> {' '}
+            <br/>
+
+            <label for="hvhost">Hyper-V Host:
+              <input type="text" name="hvhost" id="hvhost" ref="hvhost" placeholder="Hyper-V Host" required/>
+            </label> {' '}
+            <br/>
+
+            <label for="description">Description:
+              <input type="text" name="description" id="description" ref="description" placeholder="Description" required/>
+            </label> {' '}
+            <br/>
+
             <button type="submit">Save</button>
           </form>
         </div>
@@ -63,4 +138,6 @@ export default React.createClass({
       </div>
     )
   }
-})
+}
+
+export default Jenkins
