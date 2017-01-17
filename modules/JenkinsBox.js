@@ -1,8 +1,9 @@
 import React from 'react'
 import NavLink from './NavLink'
 import JenkinsForm from './JenkinsForm'
+import JenkinsList from './JenkinsList'
 
-class Jenkins extends React.Component {
+class JenkinsBox extends React.Component {
   constructor() {
     super()
     this.state = {
@@ -35,19 +36,12 @@ class Jenkins extends React.Component {
         <h3>Jenkins</h3>
         <div>
           <JenkinsForm />
-          <ul>
-          {
-            this.state.allJenkins.map(function(jenkinsItem){
-              var toPath = "/jenkins/" + jenkinsItem.name
-              return <li><NavLink to={toPath}>{jenkinsItem.name}</NavLink></li>   
-            })
-          }
-          </ul>
+          <JenkinsList all={this.state.allJenkins} />
         </div>
-        {this.props.children}
+        
       </div>
     )
   }
 }
 
-export default Jenkins
+export default JenkinsBox

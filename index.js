@@ -8,15 +8,15 @@ import Repo from './modules/Repo'
 import Home from './modules/Home'
 import Azure from './modules/Azure'
 import Hv from './modules/Hv'
-import Jenkins from './modules/Jenkins'
-import JenkinsItem from './modules/JenkinsItem'
+import JenkinsBox from './modules/JenkinsBox'
+import JenkinsList from './modules/JenkinsList'
 
 render((
   <Router history={browserHistory}>
     <Route path="/" component={App}>
       <IndexRoute component={Home}/>
-      <Route path="/jenkins" component={Jenkins}>
-        <Route path="/jenkins/:jksName" component={JenkinsItem}/>
+      <Route path="/jenkins" component={JenkinsBox}>
+        <Route path="/jenkins/:jksName" component={JenkinsList}/>
       </Route>
       <Route path="/hv" component={Hv}></Route>
       <Route path="/azure" component={Azure}/>

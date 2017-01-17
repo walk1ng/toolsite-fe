@@ -1,8 +1,8 @@
 import React from 'react'
-import CIJob from './CIJob'
-import CINode from './CINode'
+import CIJobList from './CIJobList'
+import CINodeList from './CINodeList'
 
-class JenkinsItem extends React.Component {
+class Jenkins extends React.Component {
     constructor() {
         super()
         this.state = {
@@ -46,23 +46,30 @@ class JenkinsItem extends React.Component {
     render() {
         return (
             <div>
-                {this.props.params.jksName}
-                <br/>
-                {
-                    this.state.jobs.map(function(job){
-                        return <CIJob jobName={job} />
-                    })
-                }
-                <br/>
-                {
-                    this.state.nodes.map(function(node){
-                        return <CINode nodeName={node} />
-                    })
-                }
+                <CIJobList jobs={this.state.jobs} />
+                <CINodeList nodes={this.state.nodes} />
             </div>
         )
     }
-    
 }
 
-export default JenkinsItem
+class JenkinsList extends React.Component {
+
+    render() {
+        return (
+            <div>
+                <ul>
+                {
+                    this.props.all.map(function(jenkins, index){
+                        var toPath = "/jenkins/" + jenkins.name
+                        return <li><NavLink to={toPath}>{jenkins.name}</NavLink></li>   
+                    })
+                }
+                </ul>
+                {this.props.children}
+            </div>
+        )
+    }
+}
+
+export default JenkinsList
