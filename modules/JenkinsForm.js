@@ -12,40 +12,27 @@ class JenkinsForm extends React.Component {
         const mastervmpasswd = this.refs.mastervmpasswd.value
         const hvhost = this.refs.hvhost.value
         const description = this.refs.description.value
+        const form = this.refs.form
+        form.reset()
 
-        var all = this.state.allJenkins
         const newJenkins = {
-        name: name,
-        url: url,
-        user: user,
-        passwd: passwd,
-        mastervmname: mastervmname,
-        mastervmuser: mastervmuser,
-        mastervmpasswd: mastervmpasswd,
-        hvhost: hvhost,
-        description: description,
+            name: name,
+            url: url,
+            user: user,
+            passwd: passwd,
+            mastervmname: mastervmname,
+            mastervmuser: mastervmuser,
+            mastervmpasswd: mastervmpasswd,
+            hvhost: hvhost,
+            description: description,
         }
-
-        $.ajax({
-        url: "http://localhost:8000/jenkins/add",
-        dataType: 'json',
-        type: 'POST',
-        data: newJenkins,
-        success: jenkins => {
-            all.push(newJenkins)
-            this.setState({allJenkins: all})
-        },
-        error: (xhr, status, err) => {
-            console.log(err.toString());
-            this.setState({allJenkins: all});
-        }
-        })
+        this.props.onSubmit(newJenkins)
     }
 
     render() {
         return (
             <div>
-            <form onSubmit={e => this.handleSubmit(e)}>
+            <form onSubmit={e => this.handleSubmit(e)} ref="form">
                 <label for="name">Jenkins Name:
                 <input type="text" name="name" id="name" ref="name" placeholder="Jenkins Name" required/>
                 </label> {' '}

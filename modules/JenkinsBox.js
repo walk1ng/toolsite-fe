@@ -7,7 +7,10 @@ class JenkinsBox extends React.Component {
   constructor() {
     super()
     this.state = {
-      allJenkins: [],
+      allJenkins: [
+        {name: 'testjenkins1'},
+        {name: 'testjenkins2'}
+      ],
     }
   }
 
@@ -30,15 +33,34 @@ class JenkinsBox extends React.Component {
     this.loadDataFromServer()
   }
 
+  submitNewJenkins(jenkins) {
+    const allJenkins = this.state.allJenkins
+    const newAllJenkins = allJenkins.concat([jenkins])
+    this.setState({allJenkins: newAllJenkins})
+
+    $.ajax({
+      url: "http://localhost:8000/jenkins/add",
+      dataType: 'json',
+      type: 'POST',
+      data: jenkins,
+      success: jenkinses => {
+          this.setState({allJenkins: jenkinses})
+      },
+      error: (xhr, status, err) => {
+          console.log(err.toString());
+          this.setState({allJenkins: allJenkins});
+      }
+    })
+  }
+
   render() {
     return (
       <div>
         <h3>Jenkins</h3>
         <div>
-          <JenkinsForm />
+          <JenkinsForm onSubmit={(jenkins) => this.submitNewJenkins(jenkins)} />
           <JenkinsList all={this.state.allJenkins} />
         </div>
-        
       </div>
     )
   }

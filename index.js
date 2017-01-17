@@ -9,14 +9,15 @@ import Home from './modules/Home'
 import Azure from './modules/Azure'
 import Hv from './modules/Hv'
 import JenkinsBox from './modules/JenkinsBox'
-import JenkinsList from './modules/JenkinsList'
+import Jenkins from './modules/Jenkins'
+import Test from './modules/test'
 
 render((
   <Router history={browserHistory}>
     <Route path="/" component={App}>
       <IndexRoute component={Home}/>
       <Route path="/jenkins" component={JenkinsBox}>
-        <Route path="/jenkins/:jksName" component={JenkinsList}/>
+        <Route path="/jenkins/:jksName" component={Test}/>
       </Route>
       <Route path="/hv" component={Hv}></Route>
       <Route path="/azure" component={Azure}/>
