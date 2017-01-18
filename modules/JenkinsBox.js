@@ -58,7 +58,6 @@ class JenkinsBox extends React.Component {
       <div>
         <h3>Jenkins</h3>
         <div>
-          <JenkinsForm onSubmit={(jenkins) => this.submitNewJenkins(jenkins)} />
           <JenkinsList all={this.state.allJenkins} />
         </div>
       </div>

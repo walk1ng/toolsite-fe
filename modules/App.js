@@ -11,6 +11,7 @@ class App extends React.Component {
           <li><NavLink to="/jenkins">Jenkins</NavLink></li> {' '}
           <li><NavLink to="/hv">HyperV</NavLink></li> {' '}
           <li><NavLink to="/azure">Azure</NavLink></li> {' '}
+          <li><NavLink to="/admin">Admin</NavLink></li> {' '}
           <li><NavLink to="/about">About</NavLink></li> {' '}
         </ul>
         {this.props.children}
